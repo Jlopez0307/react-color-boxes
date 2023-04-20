@@ -1,6 +1,6 @@
 import React from 'react'
 import BoxList from './BoxList';
-import './App.css';
+import './styles/App.css';
 
 
 function App() {

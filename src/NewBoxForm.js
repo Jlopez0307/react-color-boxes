@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import Box from "./Box";
+import { v4 as uuid } from 'uuid';
 
 //Uses addBox function from BoxList as prop
 const NewBoxForm = ({ addBox }) => {
     //State for when the form/inputs need to be empty
     const INITIAL_STATE = {
+        id: uuid(),
         color: '#ff0000',
         width: '100',
         height: '100'
@@ -13,7 +15,7 @@ const NewBoxForm = ({ addBox }) => {
     //State for all form data
     const [formData, setFormData] = useState(INITIAL_STATE);
 
-    //Handles changes in the inputs, and puts them in state based on their names and values
+    //Handles changes in the inputs, captures other boxes in state and puts new boxes in state based on their names and values
     const handleChange = e => {
         const { name, value } = e.target;
         setFormData(() => ({
@@ -22,7 +24,7 @@ const NewBoxForm = ({ addBox }) => {
         }));
     };
 
-    //Handles form submit, pushes data up to BoxList to create a new Box Component
+    //Handles form submit, pushes formData up to BoxList to create a new Box Component
     const handleSubmit = e => {
         e.preventDefault();
         addBox({...formData});

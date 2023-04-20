@@ -1,19 +1,24 @@
 import React, { useState } from 'react';
 import NewBoxForm from './NewBoxForm';
 import Box from './Box.js'
+import './styles/Box.css'
+import { v4 as uuid } from 'uuid'
 
 const BoxList = () => {
     const INITIAL_STATE = [
-        {color: 'red', width: '100', height: '100'}
+        {id: uuid(), color: 'red', width: '100', height: '100'}
     ];
-    const [box, setBox] = useState(INITIAL_STATE);
+    const [boxes, setBoxes] = useState(INITIAL_STATE);
+    console.log(boxes)
 
+    //Adds a new box to state from form data
     const addBox = (newBox) => {
-        setBox(boxes => [...boxes, {...newBox}])
+        setBoxes(boxes => [...boxes, {...newBox, id: uuid()}])
     };
 
-    const removeBox = () => {
-
+    //Removes box
+    const removeBox = (boxId) => {
+        setBoxes(boxes.filter(box => box.id !== boxId))
     };
 
 
@@ -24,7 +29,7 @@ const BoxList = () => {
             <NewBoxForm addBox={addBox}/>
 
             <div className="BoxList">
-                {box.map(({ color, width, height }) => <Box color={color} width={width} height={height}/>)}
+                {boxes.map(({ color, width, height, id }) => <Box color={color} width={width} height={height} key={id} id={id} removeBox={removeBox}/>)}
             </div>
         </>
     );
